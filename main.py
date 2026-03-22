@@ -13,6 +13,7 @@ from typing import List
 from models.receita import Receita
 from utils.storage import carregar_receitas, salvar_receitas, proxima_id
 from services import receita_service
+from services.recipe_suggester import sugerir_receitas, exibir_sugestoes, listar_ingredientes_que_faltam
 
 # ==================== CONSTANTES ====================
 
@@ -439,6 +440,55 @@ def listar_favoritas(receitas: List[Receita]) -> None:
     print("="*60)
     receita_service.exibir_lista_simples(favoritas)
 
+def sugerir_receitas_por_ingredientes(receitas: List[Receita]) -> None:
+    """Sugere receitas baseado nos ingredientes que o usuário possui"""
+    print("\n" + "="*60)
+    print("  💡 SUGESTÃO INTELIGENTE DE RECEITAS")
+    print("="*60)
+    
+    print("\nDigite os ingredientes que você possui:")
+    print("(Digite um ingrediente por linha, deixe em branco para terminar)")
+    
+    ingredientes = []
+    while True:
+        ing = input("> ").strip()
+        if not ing:
+            if ingredientes:
+                break
+            print(" Adicione pelo menos um ingrediente!")
+            continue
+        ingredientes.append(ing)
+    
+    if not ingredientes:
+        print(" Nenhum ingrediente fornecido!")
+        return
+    
+    print("\n Processando...")
+    sugestoes = sugerir_receitas(receitas, ingredientes, limite=5)
+    exibir_sugestoes(sugestoes)
+    
+    # Opção de ver mais detalhes de uma sugestão
+    if sugestoes:
+        print("\nDeseja ver os ingredientes que faltam para alguma receita?")
+        try:
+            id_receita = input("Digite o ID da receita (ou deixe em branco para voltar): ").strip()
+            if id_receita:
+                id_int = int(id_receita)
+                receita = next((r for r in receitas if r.id == id_int), None)
+                if receita:
+                    faltam = listar_ingredientes_que_faltam(receita, ingredientes)
+                    if faltam:
+                        print(f"\n Ingredientes que faltam para '{receita.nome}':")
+                        for ing in faltam:
+                            print(f"  - {ing}")
+                    else:
+                        print(f"\n ✅ Você tem todos os ingredientes para '{receita.nome}'!")
+                else:
+                    print(" Receita não encontrada!")
+        except ValueError:
+            print(" ID inválido!")
+
+
 # ==== MENU PRINCIPAL ====
 
 def exibir_menu() -> None:
@@ -467,6 +517,9 @@ def exibir_menu() -> None:
     print("  13. Top receitas")
     print("  14. Favoritar receita")
     print("  15. Listar favoritas")
+    
+    print("\n ✨ IA & SUGESTÕES")
+    print("  16. Sugerir receitas por ingredientes")
     
     print("\n  0. Sair")
     print("="*60)
@@ -509,10 +562,12 @@ def processar_opcao(opcao: str, receitas: List[Receita]) -> tuple:
             receitas = favoritar_receita(receitas)
         elif opcao == "15":
             listar_favoritas(receitas)
+        elif opcao == "16":
+            sugerir_receitas_por_ingredientes(receitas)
         elif opcao == "0":
             return receitas, "sair"
         else:
-            print("\n Opção inválida! Digite um número de 0 a 15.")
+            print("\n Opção inválida! Digite um número de 0 a 16.")
             return receitas, True
         
         return receitas, True
