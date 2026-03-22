@@ -427,31 +427,31 @@ def listar_favoritas(receitas: List[Receita]) -> None:
 def exibir_menu() -> None:
     """Exibe o menu principal"""
     print("\n" + "="*60)
-    print("   GERENCIADOR DE RECEITAS ")
+    print("  🍴 GERENCIADOR DE RECEITAS 🍳")
     print("="*60)
     
     print("\n GERENCIAR RECEITAS")
-    print("  1.   Adicionar receita")
-    print("  2.   Listar todas as receitas")
-    print("  3.   Ver detalhes de receita")
-    print("  4.    Editar receita")
-    print("  5.    Deletar receita")
+    print("  1️⃣   Adicionar receita")
+    print("  2️⃣   Listar todas as receitas")
+    print("  3️⃣   Ver detalhes de receita")
+    print("  4️⃣   Editar receita")
+    print("  5️⃣   Deletar receita")
     
-    print("\n BUSCAR E FILTRAR")
-    print("  6.   Buscar por ingrediente")
-    print("  7.   Buscar por nome")
-    print("  8.   Listar por categoria")
-    print("  9.    Filtrar por tempo de preparo")
+    print("\n 🔍 BUSCAR E FILTRAR")
+    print("  6️⃣   Buscar por ingrediente")
+    print("  7️⃣   Buscar por nome")
+    print("  8️⃣   Listar por categoria")
+    print("  9️⃣   Filtrar por tempo de preparo")
     
-    print("\n ANÁLISE E FERRAMENTAS")
-    print("  10.  Avaliar receita")
-    print("  11.  Calcular calorias")
-    print("  12.  Gerar lista de compras")
-    print("  13.  Top receitas")
-    print("  14.   Favoritar receita")
-    print("  15.   Listar favoritas")
+    print("\n 📊 ANÁLISE E FERRAMENTAS")
+    print("  🔟  Avaliar receita")
+    print("  1️⃣1️⃣  Calcular calorias")
+    print("  1️⃣2️⃣  Gerar lista de compras")
+    print("  1️⃣3️⃣  Top receitas")
+    print("  1️⃣4️⃣  Favoritar receita")
+    print("  1️⃣5️⃣  Listar favoritas")
     
-    print("\n  0.   Sair")
+    print("\n  0️⃣   Sair")
     print("="*60)
 
 def processar_opcao(opcao: str, receitas: List[Receita]) -> tuple:
@@ -506,9 +506,9 @@ def processar_opcao(opcao: str, receitas: List[Receita]) -> tuple:
 
 def main() -> None:
     """Função principal do aplicativo"""
-    print("\n" + "="*30)
-    print("Bem-vindo ao Gerenciador de Receitas!")
-    print("="*30)
+    print("\n" + "="*50)
+    print("  🍽️  BEM-VINDO AO GERENCIADOR DE RECEITAS! 👨‍🍳")
+    print("="*50)
     
     receitas = carregar_receitas()
     
@@ -524,7 +524,7 @@ def main() -> None:
         receitas, resultado = processar_opcao(opcao, receitas)
         
         if resultado == "sair":
-            print("\n Até logo! Bom apetite! ")
+            print("\n👋 Até logo! Bom apetite! 😋")
             break
 
 if __name__ == "__main__":
