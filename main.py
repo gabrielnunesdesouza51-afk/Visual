@@ -669,4 +669,24 @@ def main() -> None:
             break
 
 if __name__ == "__main__":
-    main()
+    main()# 1️⃣ Navegue até a pasta do seu projeto
+cd /caminho/para/sua/pasta/do/projeto
+
+# 2️⃣ Inicialize um repositório Git local
+git init
+
+# 3️⃣ Adicione todos os arquivos ao repositório
+git add .
+
+# 4️⃣ Faça o primeiro commit
+git commit -m "Primeiro commit do Gerenciador de Receitas"
+
+# 5️⃣ Adicione o repositório remoto do GitHub
+# Substitua SEU_USUARIO pelo seu usuário GitHub e NOME_DO_REPOSITORIO pelo nome do repo que você criou
+git remote add origin https://github.com/SEU_USUARIO/NOME_DO_REPOSITORIO.git
+
+# 6️⃣ Renomeie a branch principal para main
+git branch -M main
+
+# 7️⃣ Envie os arquivos para o GitHub
+git push -u origin main
