@@ -1,0 +1,237 @@
+[
+  {
+    "id": 1,
+    "nome": "Brigadeiro Clássico",
+    "categoria": "Sobremesa",
+    "ingredientes": [
+      "leite condensado",
+      "chocolate em pó",
+      "manteiga",
+      "chocolate granulado"
+    ],
+    "modo_preparo": "Misture leite condensado, chocolate em pó e manteiga em uma panela. Cozinhe em fogo médio, mexendo sempre até desgrudar da panela. Coloque em prato manteigado, esfrie e passe na manteiga e chocolate. Enrole em papel e refrigere.",
+    "porcoes": 20,
+    "tempo_preparo": 20,
+    "avaliacao": 0,
+    "calorias": 0,
+    "favorita": false,
+    "data": "22/03/2026 15:35"
+  },
+  {
+    "id": 2,
+    "nome": "Feijoada à Brasileira",
+    "categoria": "Salgado",
+    "ingredientes": [
+      "feijão preto",
+      "carne seca",
+      "costela de porco",
+      "linguiça",
+      "bacon",
+      "cebola",
+      "alho",
+      "louro",
+      "sal"
+    ],
+    "modo_preparo": "Cozinhe o feijão até ficar macio. Em outra panela, refogue cebola e alho, adicione as carnes e refogue bem. Misture o feijão cozido com a carne, tempere com sal e folhas de louro. Deixe cozinhar por 1 hora em fogo baixo.",
+    "porcoes": 8,
+    "tempo_preparo": 180,
+    "avaliacao": 0,
+    "calorias": 0,
+    "favorita": false,
+    "data": "22/03/2026 15:35"
+  },
+  {
+    "id": 3,
+    "nome": "Bolo de Chocolate",
+    "categoria": "Doce",
+    "ingredientes": [
+      "2 xícaras farinha de trigo",
+      "2 xícaras açúcar",
+      "4 ovos",
+      "1 xícara chocolate em pó",
+      "1 xícara leite",
+      "1/2 xícara óleo",
+      "1 colher sopa fermento"
+    ],
+    "modo_preparo": "Misture os ingredientes secos (farinha, açúcar, chocolate, fermento). Em outra tigela, bata os ovos com leite e óleo. Combine as duas misturas. Despeje em forma untada e asse a 180°C por 40-45 minutos.",
+    "porcoes": 12,
+    "tempo_preparo": 60,
+    "avaliacao": 0,
+    "calorias": 0,
+    "favorita": false,
+    "data": "22/03/2026 15:35"
+  },
+  {
+    "id": 4,
+    "nome": "Macarrão à Carbonara",
+    "categoria": "Salgado",
+    "ingredientes": [
+      "macarrão",
+      "ovos",
+      "bacon",
+      "queijo pecorino",
+      "sal",
+      "pimenta preta"
+    ],
+    "modo_preparo": "Cozinhe o macarrão. Enquanto isso, frite o bacon cortado. Bata os ovos com queijo ralado. Misture o macarrão quente com o bacon, tire do fogo e adicione a mistura de ovo. Tempere com sal e pimenta.",
+    "porcoes": 4,
+    "tempo_preparo": 30,
+    "avaliacao": 0,
+    "calorias": 0,
+    "favorita": false,
+    "data": "22/03/2026 15:35"
+  },
+  {
+    "id": 5,
+    "nome": "Bruschetta Italiana",
+    "categoria": "Aperitivo",
+    "ingredientes": [
+      "pão italiano",
+      "tomate fresco",
+      "alho",
+      "manjericão",
+      "azeite",
+      "sal",
+      "pimenta"
+    ],
+    "modo_preparo": "Corte o pão e toste no forno. Passe alho fresco nas fatias. Misture tomate cortado com alho, manjericão e azeite. Coloque sobre o pão tostado. Tempere com sal e pimenta.",
+    "porcoes": 6,
+    "tempo_preparo": 15,
+    "avaliacao": 0,
+    "calorias": 0,
+    "favorita": false,
+    "data": "22/03/2026 15:35"
+  },
+  {
+    "id": 6,
+    "nome": "Sushi de Salmão",
+    "categoria": "Japonês",
+    "ingredientes": [
+      "arroz para sushi",
+      "alga nori",
+      "salmão fresco",
+      "abacate",
+      "cenoura",
+      "pepino",
+      "gengibre",
+      "wasabi",
+      "molho de soja"
+    ],
+    "modo_preparo": "Cozinhe o arroz e tempere com vinagre de arroz. Coloque o alga nori em um tapete de bambu, espalhe o arroz, adicione os ingredientes no centro e enrole firmemente. Corte com faca molhada.",
+    "porcoes": 6,
+    "tempo_preparo": 45,
+    "avaliacao": 0,
+    "calorias": 0,
+    "favorita": false,
+    "data": "22/03/2026 15:35"
+  },
+  {
+    "id": 7,
+    "nome": "Frango Parmegiana",
+    "categoria": "Salgado",
+    "ingredientes": [
+      "peito de frango",
+      "molho de tomate",
+      "queijo mozzarela",
+      "queijo parmesão",
+      "farinha de trigo",
+      "ovo",
+      "óleo",
+      "sal"
+    ],
+    "modo_preparo": "Bata o frango, passe em ovo e farinha, frite. Coloque em refratário, cubra com molho de tomate e queijo. Asse a 180°C por 20 minutos até ficar gratin.",
+    "porcoes": 4,
+    "tempo_preparo": 50,
+    "avaliacao": 0,
+    "calorias": 0,
+    "favorita": false,
+    "data": "22/03/2026 15:35"
+  },
+  {
+    "id": 8,
+    "nome": "Pavê de Chocolate",
+    "categoria": "Sobremesa",
+    "ingredientes": [
+      "biscoito doce",
+      "chocolate em pó",
+      "achocolatado em pó",
+      "leite",
+      "manteiga",
+      "açúcar"
+    ],
+    "modo_preparo": "Misture achocolatado com leite. Mergulhe biscoitos nesta mistura e alterne camadas com creme de chocolate. Finalize com chocolate em pó ralado. Refrigere por 4 horas.",
+    "porcoes": 8,
+    "tempo_preparo": 30,
+    "avaliacao": 0,
+    "calorias": 0,
+    "favorita": false,
+    "data": "22/03/2026 15:35"
+  },
+  {
+    "id": 9,
+    "nome": "Salada Grega",
+    "categoria": "Salada",
+    "ingredientes": [
+      "tomate",
+      "pepino",
+      "cebola roxa",
+      "azeitona preta",
+      "queijo feta",
+      "azeite",
+      "orégano",
+      "sal",
+      "limão"
+    ],
+    "modo_preparo": "Corte os vegetais em cubos. Misture com azeitona, queijo feta cortado, azeite, suco de limão e orégano. Tempere com sal. Coma gelado como entrada ou acompanhamento.",
+    "porcoes": 4,
+    "tempo_preparo": 15,
+    "avaliacao": 0,
+    "calorias": 0,
+    "favorita": false,
+    "data": "22/03/2026 15:35"
+  },
+  {
+    "id": 10,
+    "nome": "Ratatouille Provençal",
+    "categoria": "Vegetariano",
+    "ingredientes": [
+      "berinjela",
+      "abobrinha",
+      "tomate",
+      "pimentão",
+      "cebola",
+      "alho",
+      "azeite",
+      "tomilho",
+      "sal"
+    ],
+    "modo_preparo": "Corte os vegetais em rodelas. Refogue cebola e alho em azeite, adicione os vegetais em camadas, tempere com tomilho, sal e pimenta. Cozinhe em fogo baixo por 45 minutos.",
+    "porcoes": 6,
+    "tempo_preparo": 60,
+    "avaliacao": 0,
+    "calorias": 0,
+    "favorita": false,
+    "data": "22/03/2026 15:35"
+  },
+  {
+    "id": 11,
+    "nome": "Tarta de Maçã",
+    "categoria": "Doce",
+    "ingredientes": [
+      "massa podre pronta",
+      "maçã",
+      "açúcar",
+      "canela",
+      "suco de limão",
+      "farinha de amêndoa",
+      "manteiga"
+    ],
+    "modo_preparo": "Forneie a massa. Fatiar maçãs, tempere com canela, suco de limão e açúcar. Arrume na massa em camadas. Polvilhe farinha de amêndoa e manteiga em dots. Asse a 200°C por 35-40 minutos.",
+    "porcoes": 8,
+    "tempo_preparo": 70,
+    "avaliacao": 0,
+    "calorias": 0,
+    "favorita": false,
+    "data": "22/03/2026 15:35"
+  }
+]
