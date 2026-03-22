@@ -14,8 +14,7 @@
     "tempo_preparo": 20,
     "avaliacao": 0,
     "calorias": 0,
-    "favorita": false,
-    "data": "22/03/2026 15:35"
+    "favorita": false
   },
   {
     "id": 2,
@@ -37,8 +36,7 @@
     "tempo_preparo": 180,
     "avaliacao": 0,
     "calorias": 0,
-    "favorita": false,
-    "data": "22/03/2026 15:35"
+    "favorita": false
   },
   {
     "id": 3,
@@ -58,8 +56,7 @@
     "tempo_preparo": 60,
     "avaliacao": 0,
     "calorias": 0,
-    "favorita": false,
-    "data": "22/03/2026 15:35"
+    "favorita": false
   },
   {
     "id": 4,
@@ -78,8 +75,7 @@
     "tempo_preparo": 30,
     "avaliacao": 0,
     "calorias": 0,
-    "favorita": false,
-    "data": "22/03/2026 15:35"
+    "favorita": false
   },
   {
     "id": 5,
@@ -99,8 +95,7 @@
     "tempo_preparo": 15,
     "avaliacao": 0,
     "calorias": 0,
-    "favorita": false,
-    "data": "22/03/2026 15:35"
+    "favorita": false
   },
   {
     "id": 6,
@@ -122,8 +117,7 @@
     "tempo_preparo": 45,
     "avaliacao": 0,
     "calorias": 0,
-    "favorita": false,
-    "data": "22/03/2026 15:35"
+    "favorita": false
   },
   {
     "id": 7,
@@ -144,8 +138,7 @@
     "tempo_preparo": 50,
     "avaliacao": 0,
     "calorias": 0,
-    "favorita": false,
-    "data": "22/03/2026 15:35"
+    "favorita": false
   },
   {
     "id": 8,
@@ -164,8 +157,7 @@
     "tempo_preparo": 30,
     "avaliacao": 0,
     "calorias": 0,
-    "favorita": false,
-    "data": "22/03/2026 15:35"
+    "favorita": false
   },
   {
     "id": 9,
@@ -187,8 +179,7 @@
     "tempo_preparo": 15,
     "avaliacao": 0,
     "calorias": 0,
-    "favorita": false,
-    "data": "22/03/2026 15:35"
+    "favorita": false
   },
   {
     "id": 10,
@@ -210,8 +201,7 @@
     "tempo_preparo": 60,
     "avaliacao": 0,
     "calorias": 0,
-    "favorita": false,
-    "data": "22/03/2026 15:35"
+    "favorita": false
   },
   {
     "id": 11,
@@ -226,12 +216,31 @@
       "farinha de amêndoa",
       "manteiga"
     ],
-    "modo_preparo": "Forneie a massa. Fatiar maçãs, tempere com canela, suco de limão e açúcar. Arrume na massa em camadas. Polvilhe farinha de amêndoa e manteiga em dots. Asse a 200°C por 35-40 minutos.",
+    "modo_preparo": "Forneie a massa. Fatie maçãs, tempere com canela, suco de limão e açúcar. Arrume na massa em camadas. Polvilhe farinha de amêndoa e manteiga em dots. Asse a 200°C por 35-40 minutos.",
     "porcoes": 8,
     "tempo_preparo": 70,
     "avaliacao": 0,
     "calorias": 0,
-    "favorita": false,
-    "data": "22/03/2026 15:35"
+    "favorita": false
+  },
+  {
+    "id": 12,
+    "nome": "Cupcake de Baunilha",
+    "categoria": "Doce",
+    "ingredientes": [
+      "farinha de trigo",
+      "açúcar",
+      "ovos",
+      "leite",
+      "manteiga",
+      "extrato de baunilha",
+      "fermento em pó"
+    ],
+    "modo_preparo": "Misture os ingredientes secos. Bata ovos, leite, manteiga e baunilha. Combine as misturas e asse em forminhas por 20 minutos a 180°C.",
+    "porcoes": 12,
+    "tempo_preparo": 35,
+    "avaliacao": 4,
+    "calorias": 200,
+    "favorita": false
   }
 ]
