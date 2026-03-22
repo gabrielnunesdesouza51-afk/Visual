@@ -107,6 +107,46 @@ def listar_por_categoria(receitas):
         for r in categorias[cat]:
             print(f"   {r['nome']}")
 
+def editar_receita(receitas):
+    """Edita uma receita existente"""
+    listar_receitas(receitas)
+    if not receitas:
+        return receitas
+    try:
+        id_receita = int(input("\nDigite o ID da receita a editar: "))
+        for r in receitas:
+            if r['id'] == id_receita:
+                print(f"\n=== EDITANDO: {r['nome']} ===")
+                print("Deixe em branco para manter o valor atual\n")
+                
+                novo_nome = input(f"Nome ({r['nome']}): ").strip()
+                if novo_nome:
+                    r['nome'] = novo_nome
+                
+                nova_categoria = input(f"Categoria ({r['categoria']}): ").strip()
+                if nova_categoria:
+                    r['categoria'] = nova_categoria
+                
+                novo_porcoes = input(f"Porções ({r['porcoes']}): ").strip()
+                if novo_porcoes:
+                    r['porcoes'] = novo_porcoes
+                
+                novos_ingredientes = input("Ingredientes novos (separados por vírgula) ou deixe em branco: ").strip()
+                if novos_ingredientes:
+                    r['ingredientes'] = [i.strip() for i in novos_ingredientes.split(',')]
+                
+                novo_preparo = input("Novo modo de preparo ou deixe em branco: ").strip()
+                if novo_preparo:
+                    r['modo_preparo'] = novo_preparo
+                
+                salvar_receitas(receitas)
+                print(f"\n✓ Receita atualizada com sucesso!")
+                return receitas
+        print("\n✗ Receita não encontrada!")
+    except ValueError:
+        print("✗ ID inválido!")
+    return receitas
+
 def deletar_receita(receitas):
     listar_receitas(receitas)
     if not receitas:
@@ -136,10 +176,11 @@ def menu_principal():
         print("3.  Ver detalhes")
         print("4.  Buscar por ingrediente")
         print("5.  Listar por categoria")
-        print("6.   Deletar receita")
-        print("7.  Sair")
+        print("6.  Editar receita")
+        print("7.  Deletar receita")
+        print("8.  Sair")
         print("="*50)
-        opcao = input("\nEscolha uma opção (1-7): ")
+        opcao = input("\nEscolha uma opção (1-8): ")
         if opcao == "1":
             adicionar_receita(receitas)
         elif opcao == "2":
@@ -151,8 +192,10 @@ def menu_principal():
         elif opcao == "5":
             listar_por_categoria(receitas)
         elif opcao == "6":
-            receitas = deletar_receita(receitas)
+            receitas = editar_receita(receitas)
         elif opcao == "7":
+            receitas = deletar_receita(receitas)
+        elif opcao == "8":
             print("\n Até logo! Bom apetite! ")
             break
         else:
