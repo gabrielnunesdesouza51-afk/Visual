@@ -14,6 +14,11 @@ from models.receita import Receita
 from utils.storage import carregar_receitas, salvar_receitas, proxima_id
 from services import receita_service
 
+# ==================== CONSTANTES ====================
+
+CATEGORIAS_VALIDAS = ["Doce", "Salgado", "Bebida", "Sobremesa", "Aperitivo", 
+                      "Salada", "Vegetariano", "Japonês", "Outro"]
+
 # ==== OPERAÇÕES DE RECEITA ====
 
 def adicionar_receita(receitas: List[Receita]) -> List[Receita]:
@@ -28,9 +33,17 @@ def adicionar_receita(receitas: List[Receita]) -> List[Receita]:
             print(" Nome não pode ser vazio!")
             return receitas
         
-        categoria = input("Categoria (Doce, Salgado, Bebida, Sobremesa): ").strip()
-        if not categoria:
-            categoria = "Outro"
+        # Validar categoria com lista de válidas
+        print(f"\nCategorias válidas: {', '.join(CATEGORIAS_VALIDAS)}")
+        while True:
+            categoria = input("Escolha uma categoria: ").strip()
+            if categoria in CATEGORIAS_VALIDAS:
+                break
+            elif not categoria:
+                categoria = "Outro"
+                break
+            print(f" ❌ Categoria inválida! Digite uma das opções acima.")
+            print(f"Categorias válidas: {', '.join(CATEGORIAS_VALIDAS)}")
         
         print("\nIngredientes (uma por linha, deixe em branco para terminar):")
         ingredientes = []
@@ -198,9 +211,13 @@ def editar_receita(receitas: List[Receita]) -> List[Receita]:
         if novo_nome:
             receita.nome = novo_nome
         
+        # Validar nova categoria se fornecida
         nova_categoria = input(f"Categoria ({receita.categoria}): ").strip()
         if nova_categoria:
-            receita.categoria = nova_categoria
+            if nova_categoria in CATEGORIAS_VALIDAS:
+                receita.categoria = nova_categoria
+            else:
+                print(f" ⚠️  Categoria inválida, mantendo '{receita.categoria}'!")
         
         novo_porcoes_str = input(f"Porções ({receita.porcoes}): ").strip()
         if novo_porcoes_str:
@@ -234,10 +251,10 @@ def editar_receita(receitas: List[Receita]) -> List[Receita]:
             receita.ingredientes = novos_ings
         
         salvar_receitas(receitas)
-        print(f"\n Receita atualizada com sucesso!")
+        print(f"\n ✅ Receita atualizada com sucesso!")
         
     except Exception as e:
-        print(f"\n Erro ao editar: {e}")
+        print(f"\n ❌ Erro ao editar: {e}")
     
     return receitas
 
@@ -430,28 +447,28 @@ def exibir_menu() -> None:
     print("  🍴 GERENCIADOR DE RECEITAS 🍳")
     print("="*60)
     
-    print("\n GERENCIAR RECEITAS")
-    print("  1️⃣   Adicionar receita")
-    print("  2️⃣   Listar todas as receitas")
-    print("  3️⃣   Ver detalhes de receita")
-    print("  4️⃣   Editar receita")
-    print("  5️⃣   Deletar receita")
+    print("\n 📋 GERENCIAR RECEITAS")
+    print("  1. Adicionar receita")
+    print("  2. Listar todas as receitas")
+    print("  3. Ver detalhes de receita")
+    print("  4. Editar receita")
+    print("  5. Deletar receita")
     
     print("\n 🔍 BUSCAR E FILTRAR")
-    print("  6️⃣   Buscar por ingrediente")
-    print("  7️⃣   Buscar por nome")
-    print("  8️⃣   Listar por categoria")
-    print("  9️⃣   Filtrar por tempo de preparo")
+    print("  6. Buscar por ingrediente")
+    print("  7. Buscar por nome")
+    print("  8. Listar por categoria")
+    print("  9. Filtrar por tempo de preparo")
     
     print("\n 📊 ANÁLISE E FERRAMENTAS")
-    print("  🔟  Avaliar receita")
-    print("  1️⃣1️⃣  Calcular calorias")
-    print("  1️⃣2️⃣  Gerar lista de compras")
-    print("  1️⃣3️⃣  Top receitas")
-    print("  1️⃣4️⃣  Favoritar receita")
-    print("  1️⃣5️⃣  Listar favoritas")
+    print("  10. Avaliar receita")
+    print("  11. Calcular calorias")
+    print("  12. Gerar lista de compras")
+    print("  13. Top receitas")
+    print("  14. Favoritar receita")
+    print("  15. Listar favoritas")
     
-    print("\n  0️⃣   Sair")
+    print("\n  0. Sair")
     print("="*60)
 
 def processar_opcao(opcao: str, receitas: List[Receita]) -> tuple:
@@ -529,41 +546,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-import json
-from models.receita import Receita
-from utils.storage import salvar_receitas, carregar_receitas, proxima_id
-
-def importar_receitas(caminho_arquivo: str):
-    """Importa receitas de um arquivo JSON para o sistema"""
-    receitas = carregar_receitas()  # Carrega receitas já existentes
-    try:
-        with open(caminho_arquivo, 'r', encoding='utf-8') as f:
-            dados = json.load(f)
-        
-        for r in dados:
-            nova_receita = Receita(
-                id=proxima_id(receitas),
-                nome=r.get("nome", "Receita sem nome"),
-                categoria=r.get("categoria", "Outro"),
-                ingredientes=r.get("ingredientes", []),
-                modo_preparo=r.get("modo_preparo", "Não informado"),
-                porcoes=r.get("porcoes", 1),
-                tempo_preparo=r.get("tempo_preparo", 0),
-                avaliacao=r.get("avaliacao", 0),
-                calorias=r.get("calorias", 0),
-                favorita=r.get("favorita", False),
-                data=r.get("data", "")
-            )
-            receitas.append(nova_receita)
-        
-        salvar_receitas(receitas)
-        print(f"\n{len(dados)} receitas importadas com sucesso!")
-    
-    except Exception as e:
-        print(f"\nErro ao importar receitas: {e}")
-
-
-# Exemplo de uso
-if __name__ == "__main__":
-    importar_receitas("data/receitas_iniciais.json")
-    
