@@ -11,7 +11,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from datetime import datetime
 from typing import List
 from models.receita import Receita
-from utils.storage import carregar_receitas, salvar_receitas, proxima_id
+from utils.storage import carregar_receitas, salvar_receitas, proxima_id, criar_receitas_iniciais
 from services import receita_service
 from services.recipe_suggester import sugerir_receitas, exibir_sugestoes, listar_ingredientes_que_faltam
 
@@ -31,53 +31,64 @@ def adicionar_receita(receitas: List[Receita]) -> List[Receita]:
     try:
         nome = input("Nome da receita: ").strip()
         if not nome:
-            print(" Nome não pode ser vazio!")
+            print(" ❌ Nome não pode ser vazio!")
             return receitas
         
-        # Validar categoria com lista de válidas
-        print(f"\nCategorias válidas: {', '.join(CATEGORIAS_VALIDAS)}")
-        while True:
-            categoria = input("Escolha uma categoria: ").strip()
-            if categoria in CATEGORIAS_VALIDAS:
-                break
-            elif not categoria:
-                categoria = "Outro"
-                break
-            print(f" ❌ Categoria inválida! Digite uma das opções acima.")
-            print(f"Categorias válidas: {', '.join(CATEGORIAS_VALIDAS)}")
+        # Validar categoria com lista de válidas - com retry
+        print(f"\n📂 Categorias disponíveis: {', '.join(CATEGORIAS_VALIDAS)}")
+        categoria = None
+        tentativas = 0
         
-        print("\nIngredientes (uma por linha, deixe em branco para terminar):")
+        while categoria is None and tentativas < 3:
+            categoria_input = input("Escolha uma categoria: ").strip()
+            
+            if not categoria_input:
+                # Se deixar em branco, usar "Outro" como padrão
+                categoria = "Outro"
+                print(f" ℹ️  Categoria não informada. Usando padrão: '{categoria}'")
+            elif categoria_input in CATEGORIAS_VALIDAS:
+                categoria = categoria_input
+            else:
+                tentativas += 1
+                if tentativas < 3:
+                    print(f" ❌ Categoria '{categoria_input}' inválida!")
+                    print(f"    Digite uma das opções acima ou deixe em branco para usar 'Outro'")
+                else:
+                    categoria = "Outro"
+                    print(f" ⚠️  Categoria inválida 3 vezes. Usando padrão: 'Outro'")
+        
+        print("\n📝 Ingredientes (uma por linha, deixe em branco para terminar):")
         ingredientes = []
         while True:
-            ing = input("   ").strip()
+            ing = input("   > ").strip()
             if not ing:
                 break
             ingredientes.append(ing)
         
         if not ingredientes:
-            print(" Receita precisa de pelo menos um ingrediente!")
+            print(" ❌ Receita precisa de pelo menos um ingrediente!")
             return receitas
         
-        modo_preparo = input("\nModo de preparo:\n> ").strip()
+        modo_preparo = input("\n👨‍🍳 Modo de preparo:\n> ").strip()
         if not modo_preparo:
-            print(" Modo de preparo não pode ser vazio!")
+            print(" ❌ Modo de preparo não pode ser vazio!")
             return receitas
         
         # Validar porcoes
         while True:
-            porcoes_str = input("Número de porções: ").strip()
+            porcoes_str = input("🍽️  Número de porções: ").strip()
             porcoes = receita_service.validar_numero(porcoes_str, minimo=1)
             if porcoes is not None:
                 break
-            print(" Digite um número válido (mínimo 1)!")
+            print(" ⚠️  Digite um número válido (mínimo 1)!")
         
         # Validar tempo_preparo
         while True:
-            tempo_str = input("Tempo de preparo (minutos): ").strip()
+            tempo_str = input("⏱️  Tempo de preparo (minutos): ").strip()
             tempo_preparo = receita_service.validar_numero(tempo_str, minimo=0)
             if tempo_preparo is not None:
                 break
-            print(" Digite um número válido!")
+            print(" ⚠️  Digite um número válido!")
         
         # Criar receita
         nova_receita = Receita(
@@ -93,11 +104,11 @@ def adicionar_receita(receitas: List[Receita]) -> List[Receita]:
         receitas.append(nova_receita)
         salvar_receitas(receitas)
         
-        print(f"\n Receita '{nome}' adicionada com sucesso!")
+        print(f"\n✅ Receita '{nome}' adicionada com sucesso!")
         return receitas
         
     except Exception as e:
-        print(f"\n Erro ao adicionar receita: {e}")
+        print(f"\n❌ Erro ao adicionar receita: {e}")
         return receitas
 
 def listar_receitas(receitas: List[Receita]) -> None:
@@ -212,13 +223,27 @@ def editar_receita(receitas: List[Receita]) -> List[Receita]:
         if novo_nome:
             receita.nome = novo_nome
         
-        # Validar nova categoria se fornecida
-        nova_categoria = input(f"Categoria ({receita.categoria}): ").strip()
-        if nova_categoria:
-            if nova_categoria in CATEGORIAS_VALIDAS:
-                receita.categoria = nova_categoria
+        # Validar nova categoria com opção de tentar novamente
+        print(f"📂 Categorias disponíveis: {', '.join(CATEGORIAS_VALIDAS)}")
+        nova_categoria_input = input(f"Categoria ({receita.categoria}): ").strip()
+        
+        if nova_categoria_input:
+            if nova_categoria_input in CATEGORIAS_VALIDAS:
+                receita.categoria = nova_categoria_input
             else:
-                print(f" ⚠️  Categoria inválida, mantendo '{receita.categoria}'!")
+                tentativas = 1
+                while tentativas < 2:
+                    print(f" ⚠️  Categoria '{nova_categoria_input}' inválida!")
+                    nova_categoria_input = input("Digite uma categoria válida (ou deixe em branco para manter): ").strip()
+                    if not nova_categoria_input:
+                        break
+                    if nova_categoria_input in CATEGORIAS_VALIDAS:
+                        receita.categoria = nova_categoria_input
+                        break
+                    tentativas += 1
+                
+                if tentativas >= 2 and nova_categoria_input not in CATEGORIAS_VALIDAS:
+                    print(f" ℹ️  Mantendo categoria anterior: '{receita.categoria}'")
         
         novo_porcoes_str = input(f"Porções ({receita.porcoes}): ").strip()
         if novo_porcoes_str:
@@ -226,7 +251,7 @@ def editar_receita(receitas: List[Receita]) -> List[Receita]:
             if novo_porcoes is not None:
                 receita.porcoes = novo_porcoes
             else:
-                print(" Valor de porções inválido, mantendo anterior!")
+                print(" ⚠️  Valor de porções inválido, mantendo anterior!")
         
         novo_tempo_str = input(f"Tempo ({receita.tempo_preparo} min): ").strip()
         if novo_tempo_str:
@@ -234,16 +259,16 @@ def editar_receita(receitas: List[Receita]) -> List[Receita]:
             if novo_tempo is not None:
                 receita.tempo_preparo = novo_tempo
             else:
-                print(" Valor de tempo inválido, mantendo anterior!")
+                print(" ⚠️  Valor de tempo inválido, mantendo anterior!")
         
         novo_preparo = input("Novo modo de preparo (deixe em branco para manter): ").strip()
         if novo_preparo:
             receita.modo_preparo = novo_preparo
         
-        print("\nNovos ingredientes (deixe em branco para manter) - um por linha:")
+        print("\n📝 Novos ingredientes (deixe em branco para manter) - um por linha:")
         novos_ings = []
         while True:
-            ing = input("   ").strip()
+            ing = input("   > ").strip()
             if not ing:
                 break
             novos_ings.append(ing)
@@ -252,10 +277,10 @@ def editar_receita(receitas: List[Receita]) -> List[Receita]:
             receita.ingredientes = novos_ings
         
         salvar_receitas(receitas)
-        print(f"\n ✅ Receita atualizada com sucesso!")
+        print(f"\n✅ Receita atualizada com sucesso!")
         
     except Exception as e:
-        print(f"\n ❌ Erro ao editar: {e}")
+        print(f"\n❌ Erro ao editar: {e}")
     
     return receitas
 
@@ -585,9 +610,17 @@ def main() -> None:
     receitas = carregar_receitas()
     
     if receitas:
-        print(f"\n {len(receitas)} receita(s) carregada(s) do arquivo!")
+        print(f"\n✅ {len(receitas)} receita(s) carregada(s) do arquivo!")
     else:
-        print("\n Começar adicionando sua primeira receita!")
+        print("\n⚠️  Nenhuma receita encontrada.")
+        resposta = input("Deseja carregar receitas iniciais de exemplo? (s/n): ").strip().lower()
+        
+        if resposta == 's':
+            receitas = criar_receitas_iniciais()
+            salvar_receitas(receitas)
+            print(f"\n✅ {len(receitas)} receita(s) de exemplo carregada(s)!")
+        else:
+            print("\n ℹ️  Comece adicionando sua primeira receita!")
     
     while True:
         exibir_menu()

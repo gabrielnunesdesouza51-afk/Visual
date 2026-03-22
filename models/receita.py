@@ -57,20 +57,57 @@ class Receita:
     
     @staticmethod
     def do_dict(dados: Dict) -> 'Receita':
-        """Cria uma receita a partir de um dicionário"""
-        return Receita(
-            id=dados['id'],
-            nome=dados['nome'],
-            categoria=dados['categoria'],
-            ingredientes=dados['ingredientes'],
-            modo_preparo=dados['modo_preparo'],
-            porcoes=dados['porcoes'],
-            tempo_preparo=dados['tempo_preparo'],
-            avaliacao=dados.get('avaliacao', 0),
-            calorias=dados.get('calorias', 0),
-            favorita=dados.get('favorita', False),
-            data=dados.get('data')
-        )
+        """Cria uma receita a partir de um dicionário com robustez"""
+        # Campos obrigatórios
+        try:
+            id_val = dados.get('id')
+            nome_val = dados.get('nome')
+            categoria_val = dados.get('categoria')
+            ingredientes_val = dados.get('ingredientes', [])
+            modo_preparo_val = dados.get('modo_preparo')
+            porcoes_val = dados.get('porcoes')
+            tempo_preparo_val = dados.get('tempo_preparo')
+            
+            # Validar campos obrigatórios
+            if not all([id_val is not None, nome_val, categoria_val, 
+                       ingredientes_val, modo_preparo_val, 
+                       porcoes_val is not None, tempo_preparo_val is not None]):
+                raise ValueError("Campos obrigatórios ausentes ou inválidos")
+            
+            # Campos opcionais com defaults
+            avaliacao_val = dados.get('avaliacao', 0)
+            calorias_val = dados.get('calorias', 0)
+            favorita_val = dados.get('favorita', False)
+            data_val = dados.get('data')
+            
+            # Validar tipos
+            if not isinstance(ingredientes_val, list):
+                ingredientes_val = [str(ingredientes_val)]
+            
+            if not isinstance(avaliacao_val, int):
+                avaliacao_val = 0
+            
+            if not isinstance(calorias_val, int):
+                calorias_val = 0
+            
+            if not isinstance(favorita_val, bool):
+                favorita_val = False
+            
+            return Receita(
+                id=int(id_val),
+                nome=str(nome_val),
+                categoria=str(categoria_val),
+                ingredientes=[str(ing) for ing in ingredientes_val],
+                modo_preparo=str(modo_preparo_val),
+                porcoes=int(porcoes_val),
+                tempo_preparo=int(tempo_preparo_val),
+                avaliacao=avaliacao_val,
+                calorias=calorias_val,
+                favorita=favorita_val,
+                data=data_val
+            )
+        except (ValueError, TypeError, KeyError) as e:
+            raise ValueError(f"Erro ao converter dicionário para Receita: {e}")
     
     def __repr__(self):
         return f"<Receita(id={self.id}, nome={self.nome}, categoria={self.categoria})>"
