@@ -1,0 +1,130 @@
+import json
+import os
+from datetime import datetime
+
+# Arquivo para salvar as despesas
+ARQUIVO_DESPESAS = "despesas.json"
+
+def carregar_despesas():
+    """Carrega as despesas do arquivo JSON"""
+    if os.path.exists(ARQUIVO_DESPESAS):
+        with open(ARQUIVO_DESPESAS, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    return []
+
+def salvar_despesas(despesas):
+    """Salva as despesas no arquivo JSON"""
+    with open(ARQUIVO_DESPESAS, 'w', encoding='utf-8') as f:
+        json.dump(despesas, f, indent=2, ensure_ascii=False)
+
+def adicionar_despesa(despesas):
+    """Adiciona uma nova despesa"""
+    print("\n=== ADICIONAR DESPESA ===")
+    try:
+        descricao = input("Descrição: ")
+        valor = float(input("Valor: R$ "))
+        categoria = input("Categoria (Alimentação, Transporte, Saúde, Lazer, Outro): ")
+        
+        despesa = {
+            "id": len(despesas) + 1,
+            "descricao": descricao,
+            "valor": valor,
+            "categoria": categoria,
+            "data": datetime.now().strftime("%d/%m/%Y %H:%M")
+        }
+        
+        despesas.append(despesa)
+        salvar_despesas(despesas)
+        print(f"\n✓ Despesa adicionada com sucesso!")
+        
+    except ValueError:
+        print("\n✗ Erro: Digite valores válidos!")
+
+def listar_despesas(despesas):
+    """Lista todas as despesas"""
+    if not despesas:
+        print("\n⚠️ Nenhuma despesa registrada!")
+        return
+    
+    print("\n=== LISTA DE DESPESAS ===")
+    print(f"{'ID':<5} {'Descrição':<20} {'Categoria':<15} {'Valor':<10} {'Data':<16}")
+    print("-" * 70)
+    
+    for d in despesas:
+        print(f"{d['id']:<5} {d['descricao']:<20} {d['categoria']:<15} R$ {d['valor']:<9.2f} {d['data']}")
+
+def total_por_categoria(despesas):
+    """Mostra o total gasto por categoria"""
+    if not despesas:
+        print("\n⚠️ Nenhuma despesa registrada!")
+        return
+    
+    print("\n=== TOTAL POR CATEGORIA ===")
+    categorias = {}
+    
+    for d in despesas:
+        cat = d['categoria']
+        if cat not in categorias:
+            categorias[cat] = 0
+        categorias[cat] += d['valor']
+    
+    total_geral = 0
+    for cat, total in sorted(categorias.items()):
+        print(f"{cat:<20} R$ {total:.2f}")
+        total_geral += total
+    
+    print("-" * 35)
+    print(f"{'TOTAL GERAL':<20} R$ {total_geral:.2f}")
+
+def deletar_despesa(despesas):
+    """Deleta uma despesa pelo ID"""
+    listar_despesas(despesas)
+    
+    if not despesas:
+        return
+    
+    try:
+        id_despesa = int(input("\nDigite o ID da despesa a deletar: "))
+        
+        despesas = [d for d in despesas if d['id'] != id_despesa]
+        salvar_despesas(despesas)
+        print("✓ Despesa deletada com sucesso!")
+        
+    except ValueError:
+        print("✗ Erro: Digite um ID válido!")
+    
+    return despesas
+
+def menu_principal():
+    """Menu principal do app"""
+    despesas = carregar_despesas()
+    
+    while True:
+        print("\n" + "="*40)
+        print("   APP DE GERENCIAMENTO DE DESPESAS")
+        print("="*40)
+        print("1. Adicionar despesa")
+        print("2. Listar despesas")
+        print("3. Ver total por categoria")
+        print("4. Deletar despesa")
+        print("5. Sair")
+        print("="*40)
+        
+        opcao = input("\nEscolha uma opção (1-5): ")
+        
+        if opcao == "1":
+            adicionar_despesa(despesas)
+        elif opcao == "2":
+            listar_despesas(despesas)
+        elif opcao == "3":
+            total_por_categoria(despesas)
+        elif opcao == "4":
+            despesas = deletar_despesa(despesas)
+        elif opcao == "5":
+            print("\n👋 Até logo!")
+            break
+        else:
+            print("\n✗ Opção inválida! Tente novamente.")
+
+if __name__ == "__main__":
+    menu_principal()
