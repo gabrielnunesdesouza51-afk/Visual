@@ -24,8 +24,10 @@ Thumbs.db
 # Temporary files
 *.log
 *.tmp
+*.txt
 input_test.txt
 test_input.txt
+debug_output.txt
 
 # Project specific
 .pytest_cache/
