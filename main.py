@@ -529,3 +529,41 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+import json
+from models.receita import Receita
+from utils.storage import salvar_receitas, carregar_receitas, proxima_id
+
+def importar_receitas(caminho_arquivo: str):
+    """Importa receitas de um arquivo JSON para o sistema"""
+    receitas = carregar_receitas()  # Carrega receitas já existentes
+    try:
+        with open(caminho_arquivo, 'r', encoding='utf-8') as f:
+            dados = json.load(f)
+        
+        for r in dados:
+            nova_receita = Receita(
+                id=proxima_id(receitas),
+                nome=r.get("nome", "Receita sem nome"),
+                categoria=r.get("categoria", "Outro"),
+                ingredientes=r.get("ingredientes", []),
+                modo_preparo=r.get("modo_preparo", "Não informado"),
+                porcoes=r.get("porcoes", 1),
+                tempo_preparo=r.get("tempo_preparo", 0),
+                avaliacao=r.get("avaliacao", 0),
+                calorias=r.get("calorias", 0),
+                favorita=r.get("favorita", False),
+                data=r.get("data", "")
+            )
+            receitas.append(nova_receita)
+        
+        salvar_receitas(receitas)
+        print(f"\n{len(dados)} receitas importadas com sucesso!")
+    
+    except Exception as e:
+        print(f"\nErro ao importar receitas: {e}")
+
+
+# Exemplo de uso
+if __name__ == "__main__":
+    importar_receitas("data/receitas_iniciais.json")
+    
