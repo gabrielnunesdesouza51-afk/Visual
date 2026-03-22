@@ -72,18 +72,33 @@ def selecionar_receita(receitas: List[Receita], acao: str = "selecionar") -> Opt
 
 def exibir_lista_simples(receitas: List[Receita]) -> None:
     """Exibe lista resumida de receitas"""
+    # DEBUG: Validar entrada
+    print(f"\n[DEBUG] exibir_lista_simples() recebeu:")
+    print(f"[DEBUG] - Tipo: {type(receitas).__name__}")
+    print(f"[DEBUG] - Total: {len(receitas)} receitas")
+    
     if not receitas:
-        print("\n Nenhuma receita registrada!")
+        print("\n❌ Nenhuma receita registrada!")
         return
     
+    print(f"\n[DEBUG] Iterando sobre lista para exibir...")
     print(f"\n{'ID':<4} {'Nome':<25} {'Categoria':<15} {'':<4} {'':<6}")
     print("-" * 70)
     
+    contagem = 0
     for r in receitas:
+        contagem += 1
+        # DEBUG: Validar tipo de cada item
+        if not isinstance(r, Receita):
+            print(f"[DEBUG] ⚠️  Item {contagem} não é Receita, é {type(r).__name__}")
+            continue
+        
         estrela = f"{'⭐' * r.avaliacao}" if r.avaliacao > 0 else ""
         nome_trunc = r.nome[:24] if len(r.nome) > 24 else r.nome
         tempo_str = f"{r.tempo_preparo}min"
         print(f"{r.id:<4} {nome_trunc:<25} {r.categoria:<15} {estrela:<4} {tempo_str:<6}")
+    
+    print(f"\n[DEBUG] Iteração completa: {contagem} receitas exibidas")
 
 def extrair_quantidade(ingrediente: str) -> Tuple[int, str]:
     """

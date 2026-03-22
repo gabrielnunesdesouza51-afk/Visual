@@ -113,6 +113,15 @@ def adicionar_receita(receitas: List[Receita]) -> List[Receita]:
 
 def listar_receitas(receitas: List[Receita]) -> None:
     """Lista todas as receitas"""
+    # DEBUG: Validar entrada
+    print(f"\n[DEBUG] listar_receitas() recebeu:")
+    print(f"[DEBUG] - Tipo de receitas: {type(receitas).__name__}")
+    print(f"[DEBUG] - Total de items: {len(receitas)}")
+    
+    if receitas:
+        print(f"[DEBUG] - Primeiro item é Receita: {type(receitas[0]).__name__ == 'Receita'}")
+        print(f"[DEBUG] - Chamando exibir_lista_simples() com {len(receitas)} receitas...")
+    
     receita_service.exibir_lista_simples(receitas)
 
 def ver_detalhes_receita(receitas: List[Receita]) -> None:
@@ -607,10 +616,37 @@ def main() -> None:
     print("  🍽️  BEM-VINDO AO GERENCIADOR DE RECEITAS! 👨‍🍳")
     print("="*50)
     
+    # DEBUG: Informar localização e carregamento
+    import os
+    arquivo_json = "receitas.json"
+    caminho_absoluto = os.path.abspath(arquivo_json)
+    
+    print(f"\n[DEBUG] Buscando arquivo de receitas...")
+    print(f"[DEBUG] Arquivo esperado: {arquivo_json}")
+    print(f"[DEBUG] Caminho absoluto: {caminho_absoluto}")
+    print(f"[DEBUG] Arquivo existe: {os.path.exists(arquivo_json)}")
+    
     receitas = carregar_receitas()
     
+    # DEBUG: Validar tipo e quantidade
+    print(f"\n[DEBUG] Função carregar_receitas() retornou:")
+    print(f"[DEBUG] - Tipo: {type(receitas).__name__}")
+    print(f"[DEBUG] - Total de items: {len(receitas)}")
+    
     if receitas:
-        print(f"\n✅ {len(receitas)} receita(s) carregada(s) do arquivo!")
+        print(f"[DEBUG] - Primeiro item tipo: {type(receitas[0]).__name__}")
+        if receitas:
+            r = receitas[0]
+            print(f"[DEBUG] - Validando primeira receita:")
+            print(f"[DEBUG]   * id={r.id}, nome={r.nome}, categoria={r.categoria}")
+            print(f"[DEBUG]   * É objeto Receita: {r.__class__.__name__ == 'Receita'}")
+    
+    print(f"\n{'='*50}")
+    
+    if receitas:
+        print(f"✅ {len(receitas)} receita(s) carregada(s) do arquivo!")
+        print(f"\n[DEBUG] Exibindo lista de receitas com exibir_lista_simples()...")
+        print(f"[DEBUG] Esta função iterará sobre {len(receitas)} objetos Receita\n")
     else:
         print("\n⚠️  Nenhuma receita encontrada.")
         resposta = input("Deseja carregar receitas iniciais de exemplo? (s/n): ").strip().lower()
